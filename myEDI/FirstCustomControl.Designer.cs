@@ -49,7 +49,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.label4);
             this.Name = "FirstCustomControl";
-            this.Size = new System.Drawing.Size(817, 423);
+            this.Size = new System.Drawing.Size(817, 500);
             this.Load += new System.EventHandler(this.FirstCustomControl_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

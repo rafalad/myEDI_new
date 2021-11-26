@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WorkplaceControl));
             this.checkBox_maps = new System.Windows.Forms.CheckBox();
             this.comboBox_setup = new System.Windows.Forms.ComboBox();
             this.checkBoxSRQ = new System.Windows.Forms.CheckBox();
@@ -41,16 +40,18 @@
             this.checkBox_setup = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.checkBox_ldap = new System.Windows.Forms.CheckBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.checkBoxSRQno = new System.Windows.Forms.CheckBox();
+            this.listBoxDeployment = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // checkBox_maps
             // 
             this.checkBox_maps.AutoSize = true;
             this.checkBox_maps.Font = new System.Drawing.Font("Century Gothic", 11.25F);
-            this.checkBox_maps.Location = new System.Drawing.Point(190, 265);
+            this.checkBox_maps.Location = new System.Drawing.Point(149, 266);
             this.checkBox_maps.Name = "checkBox_maps";
             this.checkBox_maps.Size = new System.Drawing.Size(69, 24);
             this.checkBox_maps.TabIndex = 44;
@@ -60,6 +61,7 @@
             // 
             // comboBox_setup
             // 
+            this.comboBox_setup.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.comboBox_setup.Font = new System.Drawing.Font("Century Gothic", 11.25F);
             this.comboBox_setup.FormattingEnabled = true;
             this.comboBox_setup.Items.AddRange(new object[] {
@@ -75,7 +77,7 @@
             "myDSV",
             "other",
             "Passthrough"});
-            this.comboBox_setup.Location = new System.Drawing.Point(302, 238);
+            this.comboBox_setup.Location = new System.Drawing.Point(229, 241);
             this.comboBox_setup.Name = "comboBox_setup";
             this.comboBox_setup.Size = new System.Drawing.Size(144, 28);
             this.comboBox_setup.Sorted = true;
@@ -85,16 +87,15 @@
             // checkBoxSRQ
             // 
             this.checkBoxSRQ.AutoSize = true;
-            this.checkBoxSRQ.Checked = true;
-            this.checkBoxSRQ.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxSRQ.Font = new System.Drawing.Font("Century Gothic", 11.25F);
-            this.checkBoxSRQ.Location = new System.Drawing.Point(695, 299);
+            this.checkBoxSRQ.Location = new System.Drawing.Point(648, 276);
             this.checkBoxSRQ.Name = "checkBoxSRQ";
             this.checkBoxSRQ.Size = new System.Drawing.Size(51, 24);
             this.checkBoxSRQ.TabIndex = 38;
             this.checkBoxSRQ.TabStop = false;
             this.checkBoxSRQ.Text = "Yes";
             this.checkBoxSRQ.UseVisualStyleBackColor = true;
+            this.checkBoxSRQ.CheckedChanged += new System.EventHandler(this.checkBoxSRQ_CheckedChanged);
             // 
             // label13
             // 
@@ -102,17 +103,17 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label13.Font = new System.Drawing.Font("Century Gothic", 11.25F);
-            this.label13.Location = new System.Drawing.Point(502, 299);
+            this.label13.Location = new System.Drawing.Point(422, 242);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(213, 21);
+            this.label13.Size = new System.Drawing.Size(358, 31);
             this.label13.TabIndex = 38;
-            this.label13.Text = "+ Deploy Request Form?";
+            this.label13.Text = "Do you want to attach the pre-Deploy Doc ?";
             // 
             // checkBox_other
             // 
             this.checkBox_other.AutoSize = true;
             this.checkBox_other.Font = new System.Drawing.Font("Century Gothic", 11.25F);
-            this.checkBox_other.Location = new System.Drawing.Point(190, 340);
+            this.checkBox_other.Location = new System.Drawing.Point(149, 341);
             this.checkBox_other.Name = "checkBox_other";
             this.checkBox_other.Size = new System.Drawing.Size(70, 24);
             this.checkBox_other.TabIndex = 41;
@@ -124,24 +125,24 @@
             // CHWnumberField
             // 
             this.CHWnumberField.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.CHWnumberField.Location = new System.Drawing.Point(110, 133);
+            this.CHWnumberField.Location = new System.Drawing.Point(188, 147);
             this.CHWnumberField.Name = "CHWnumberField";
-            this.CHWnumberField.Size = new System.Drawing.Size(244, 20);
+            this.CHWnumberField.Size = new System.Drawing.Size(185, 20);
             this.CHWnumberField.TabIndex = 1;
             // 
             // SRQidField
             // 
             this.SRQidField.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.SRQidField.Location = new System.Drawing.Point(110, 198);
+            this.SRQidField.Location = new System.Drawing.Point(256, 193);
             this.SRQidField.Name = "SRQidField";
-            this.SRQidField.Size = new System.Drawing.Size(244, 20);
+            this.SRQidField.Size = new System.Drawing.Size(117, 20);
             this.SRQidField.TabIndex = 2;
             // 
             // checkBox_cl
             // 
             this.checkBox_cl.AutoSize = true;
             this.checkBox_cl.Font = new System.Drawing.Font("Century Gothic", 11.25F);
-            this.checkBox_cl.Location = new System.Drawing.Point(190, 290);
+            this.checkBox_cl.Location = new System.Drawing.Point(149, 291);
             this.checkBox_cl.Name = "checkBox_cl";
             this.checkBox_cl.Size = new System.Drawing.Size(87, 24);
             this.checkBox_cl.TabIndex = 43;
@@ -152,13 +153,14 @@
             // CreateAnObject
             // 
             this.CreateAnObject.Font = new System.Drawing.Font("Century Gothic", 11.25F);
-            this.CreateAnObject.Location = new System.Drawing.Point(610, 340);
+            this.CreateAnObject.Location = new System.Drawing.Point(624, 316);
             this.CreateAnObject.Name = "CreateAnObject";
             this.CreateAnObject.Size = new System.Drawing.Size(136, 37);
             this.CreateAnObject.TabIndex = 18;
             this.CreateAnObject.TabStop = false;
             this.CreateAnObject.Text = "Go";
             this.CreateAnObject.UseVisualStyleBackColor = true;
+            this.CreateAnObject.Click += new System.EventHandler(this.CreateAnObject_Click);
             // 
             // checkBox_setup
             // 
@@ -166,7 +168,7 @@
             this.checkBox_setup.Checked = true;
             this.checkBox_setup.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox_setup.Font = new System.Drawing.Font("Century Gothic", 11.25F);
-            this.checkBox_setup.Location = new System.Drawing.Point(190, 240);
+            this.checkBox_setup.Location = new System.Drawing.Point(149, 241);
             this.checkBox_setup.Name = "checkBox_setup";
             this.checkBox_setup.Size = new System.Drawing.Size(68, 24);
             this.checkBox_setup.TabIndex = 42;
@@ -178,7 +180,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Century Gothic", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(147, 22);
+            this.label4.Location = new System.Drawing.Point(65, 55);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(207, 41);
             this.label4.TabIndex = 24;
@@ -188,37 +190,27 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(49, 94);
+            this.label5.Location = new System.Drawing.Point(68, 117);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(305, 20);
             this.label5.TabIndex = 25;
             this.label5.Text = "SRQ / INC no. from Cherwell by copying:";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(49, 166);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 20);
-            this.label1.TabIndex = 46;
-            this.label1.Text = "Ticket name:";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(49, 241);
+            this.label2.Location = new System.Drawing.Point(68, 244);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(111, 20);
+            this.label2.Size = new System.Drawing.Size(46, 20);
             this.label2.TabIndex = 47;
-            this.label2.Text = "Type of dir for:";
+            this.label2.Text = "Type:";
             // 
             // checkBox_ldap
             // 
             this.checkBox_ldap.AutoSize = true;
             this.checkBox_ldap.Font = new System.Drawing.Font("Century Gothic", 11.25F);
-            this.checkBox_ldap.Location = new System.Drawing.Point(190, 315);
+            this.checkBox_ldap.Location = new System.Drawing.Point(149, 316);
             this.checkBox_ldap.Name = "checkBox_ldap";
             this.checkBox_ldap.Size = new System.Drawing.Size(66, 24);
             this.checkBox_ldap.TabIndex = 48;
@@ -226,14 +218,53 @@
             this.checkBox_ldap.Text = "LDAP";
             this.checkBox_ldap.UseVisualStyleBackColor = true;
             // 
-            // workplaceCustmControl
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.Font = new System.Drawing.Font("Century Gothic", 11.25F);
+            this.label3.Location = new System.Drawing.Point(131, 191);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(119, 25);
+            this.label3.TabIndex = 49;
+            this.label3.Text = "Ticket identity:";
+            // 
+            // checkBoxSRQno
+            // 
+            this.checkBoxSRQno.AutoSize = true;
+            this.checkBoxSRQno.Checked = true;
+            this.checkBoxSRQno.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxSRQno.Font = new System.Drawing.Font("Century Gothic", 11.25F);
+            this.checkBoxSRQno.Location = new System.Drawing.Point(705, 276);
+            this.checkBoxSRQno.Name = "checkBoxSRQno";
+            this.checkBoxSRQno.Size = new System.Drawing.Size(49, 24);
+            this.checkBoxSRQno.TabIndex = 50;
+            this.checkBoxSRQno.TabStop = false;
+            this.checkBoxSRQno.Text = "No";
+            this.checkBoxSRQno.UseVisualStyleBackColor = true;
+            this.checkBoxSRQno.CheckedChanged += new System.EventHandler(this.checkBoxSRQno_CheckedChanged);
+            // 
+            // listBoxDeployment
+            // 
+            this.listBoxDeployment.BackColor = System.Drawing.SystemColors.Control;
+            this.listBoxDeployment.FormattingEnabled = true;
+            this.listBoxDeployment.Location = new System.Drawing.Point(72, 415);
+            this.listBoxDeployment.Name = "listBoxDeployment";
+            this.listBoxDeployment.Size = new System.Drawing.Size(595, 82);
+            this.listBoxDeployment.TabIndex = 56;
+            this.listBoxDeployment.SelectedIndexChanged += new System.EventHandler(this.listBoxDeployment_SelectedIndexChanged);
+            // 
+            // WorkplaceControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.listBoxDeployment);
+            this.Controls.Add(this.checkBoxSRQno);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.checkBox_ldap);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.checkBox_maps);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBox_setup);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.checkBoxSRQ);
@@ -245,8 +276,8 @@
             this.Controls.Add(this.checkBox_cl);
             this.Controls.Add(this.checkBox_setup);
             this.Controls.Add(this.CreateAnObject);
-            this.Name = "workplaceControl";
-            this.Size = new System.Drawing.Size(817, 406);
+            this.Name = "WorkplaceControl";
+            this.Size = new System.Drawing.Size(818, 500);
             this.Load += new System.EventHandler(this.WorkplaceControl_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -266,8 +297,10 @@
         private System.Windows.Forms.CheckBox checkBox_setup;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox checkBox_ldap;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox checkBoxSRQno;
+        private System.Windows.Forms.ListBox listBoxDeployment;
     }
 }
