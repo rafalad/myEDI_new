@@ -33,11 +33,6 @@ namespace myEDI
 			listBoxDeployment.Items.Add(value);
 		}
 
-		private void checkBox_other_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void CreateAnObject_Click(object sender, EventArgs e)
         {
             ExtractResource click = new ExtractResource();
@@ -228,5 +223,236 @@ namespace myEDI
         {
 
         }
+
+        private void checkBox_setup_CheckedChanged(object sender, EventArgs e)
+        {
+			if (checkBox_setup.Checked)
+			{
+				checkBox_maps.Checked = false;
+				checkBox_cl.Checked = false;
+				checkBox_other.Checked = false;
+				checkBox_ldap.Checked = false;
+				checkBoxSRQ.Checked = true;
+				checkBoxSRQ.Enabled = true;
+				checkBoxSRQno.Enabled = true;
+				comboBox_setup.Enabled = true;
+			}
+		}
+
+        private void checkBox_maps_CheckedChanged(object sender, EventArgs e)
+        {
+			if (checkBox_maps.Checked)
+			{
+				checkBox_cl.Checked = false;
+				checkBox_setup.Checked = false;
+				checkBox_other.Checked = false;
+				checkBox_ldap.Checked = false;
+				checkBoxSRQ.Checked = false;
+				checkBoxSRQ.Enabled = true;
+				checkBoxSRQno.Enabled = true;
+				comboBox_setup.Enabled = false;
+			}
+		}
+
+        private void checkBox_cl_CheckedChanged(object sender, EventArgs e)
+        {
+			if (checkBox_cl.Checked)
+			{
+				checkBox_maps.Checked = false;
+				checkBox_setup.Checked = false;
+				checkBox_ldap.Checked = false;
+				checkBox_other.Checked = false;
+				checkBoxSRQ.Checked = false;
+				checkBoxSRQ.Enabled = false;
+				checkBoxSRQno.Enabled = false;
+				checkBoxSRQno.Checked = false;
+				comboBox_setup.Enabled = false;
+			}
+		}
+
+        private void checkBox_ldap_CheckedChanged(object sender, EventArgs e)
+        {
+			if (checkBox_ldap.Checked)
+			{
+				checkBox_maps.Checked = false;
+				checkBox_setup.Checked = false;
+				checkBox_other.Checked = false;
+				checkBoxSRQ.Checked = false;
+				checkBoxSRQ.Enabled = false;
+				checkBoxSRQno.Enabled = false;
+				checkBoxSRQno.Checked = false;
+				comboBox_setup.Enabled = false;
+				checkBox_cl.Checked = false;
+			}
+		}
+
+		private void checkBox_other_CheckedChanged(object sender, EventArgs e)
+		{
+			if (checkBox_other.Checked)
+			{
+				checkBox_maps.Checked = false;
+				checkBox_setup.Checked = false;
+				checkBox_cl.Checked = false;
+				checkBoxSRQ.Checked = false;
+				checkBoxSRQ.Enabled = true;
+				checkBoxSRQno.Enabled = true;
+				checkBoxSRQno.Checked = true;
+				comboBox_setup.Enabled = false;
+				checkBox_ldap.Checked = false;
+			}
+		}
+
+        private void checkBox_cl_in_CheckedChanged(object sender, EventArgs e)
+        {
+			if (checkBox_cl_in.Checked)
+			{
+				checkBox_cl_out.Checked = false;
+				checkBox_cl_both.Checked = false;
+				textBoxChildID.Enabled = true;
+			}
+		}
+
+        private void checkBox_cl_out_CheckedChanged(object sender, EventArgs e)
+        {
+			if (checkBox_cl_out.Checked)
+			{
+				checkBox_cl_in.Checked = false;
+				checkBox_cl_both.Checked = false;
+				textBoxChildID.Enabled = false;
+			}
+		}
+
+        private void checkBox_cl_both_CheckedChanged(object sender, EventArgs e)
+        {
+			if (checkBox_cl_both.Checked)
+			{
+				checkBox_cl_in.Checked = false;
+				checkBox_cl_out.Checked = false;
+				textBoxChildID.Enabled = true;
+			}
+		}
+
+        private void buttonCreateCL_Click(object sender, EventArgs e)
+        {
+			if (checkBox_cl_in.Checked == false && checkBox_cl_out.Checked == false && checkBox_cl_both.Checked == false)
+				MessageBox.Show("Select the flow direction.", "myEDI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+
+			if (checkBox_cl_both.Checked)
+				CL_both();
+			if (checkBox_cl_in.Checked)
+				CL_inbound();
+			if (checkBox_cl_out.Checked)
+				CL_outbound();
+		}
+
+		private void CL_both ()
+		{
+			string parentID = textBoxParentID.Text;
+			string childID = textBoxChildID.Text;
+
+			if (String.IsNullOrEmpty(parentID))
+			{
+				MessageBox.Show("Enter the parent name, please.", "myEDI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			}
+			else if (String.IsNullOrEmpty(childID))
+			{
+				MessageBox.Show("Enter the child name, please.", "myEDI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			}
+
+			else
+			{
+				string codelist_ReceiveEncoding = "DSV_CL_RECEIVE_ENCODING_" + childID + "_cl";
+				string codelist_SourceIDLookup = "DSV_CL_SourceIDLookup_" + parentID + "_D10B_CDM_V2_cl";
+				string codelist_SendEncoding = "DSV_CL_SEND_ENCODING_" + parentID + "_cl";
+
+				string pathString = Path.Combine(@"C:\EDI", "codelist.txt");
+
+				string[] naglowek = { codelist_ReceiveEncoding, codelist_SourceIDLookup, codelist_SendEncoding };
+				File.WriteAllLines(pathString, naglowek);
+
+				ListBox("[" + DateTime.Now.ToString("HH:mm:ss") + "] CL has been created.");
+
+				Process.Start(pathString);
+
+				MessageBox.Show("A codelist name has been created for both flows." + Environment.NewLine +
+					"The file will be saved in: " + pathString, "myEDI", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+		}
+
+		private void CL_inbound ()
+		{
+			string parentID = textBoxParentID.Text;
+			string childID = textBoxChildID.Text;
+
+			if (String.IsNullOrEmpty(parentID))
+			{
+				MessageBox.Show("Enter the parent name, please.", "myEDI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			}
+			else if (String.IsNullOrEmpty(childID))
+			{
+				MessageBox.Show("Enter the child name, please.", "myEDI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			}
+
+			else
+			{
+				string codelist_ReceiveEncoding = "DSV_CL_RECEIVE_ENCODING_" + childID + "_cl";
+				string codelist_SourceIDLookup = "DSV_CL_SourceIDLookup_" + parentID + "_D10B_CDM_V2_cl";
+
+				string pathString = Path.Combine(@"C:\EDI", "codelist.txt");
+
+				string[] naglowek = { codelist_ReceiveEncoding, codelist_SourceIDLookup };
+				File.WriteAllLines(pathString, naglowek);
+
+				ListBox("[" + DateTime.Now.ToString("HH:mm:ss") + "] CL has been created.");
+
+				Process.Start(pathString);
+
+				MessageBox.Show("A codelist name has been created for the Inbound flow." + Environment.NewLine +
+					"The file will be saved in: " + pathString, "myEDI", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+		}
+
+		private void CL_outbound ()
+		{
+			string parentID = textBoxParentID.Text;
+
+			if (String.IsNullOrEmpty(parentID))
+			{
+				MessageBox.Show("Enter the parent name, please.", "myEDI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			}
+
+			else
+			{
+				string codelist_SendEncoding = "DSV_CL_SEND_ENCODING_" + parentID + "_cl";
+
+				string pathString = Path.Combine(@"C:\EDI", "codelist.txt");
+
+				string[] naglowek = { codelist_SendEncoding };
+				File.WriteAllLines(pathString, naglowek);
+
+				ListBox("[" + DateTime.Now.ToString("HH:mm:ss") + "] CL has been created.");
+
+				Process.Start(pathString);
+
+				MessageBox.Show("A codelist name has been created for the Outbound flow." + Environment.NewLine +
+					"The file will be saved in: " + pathString, "myEDI", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+		}
+
+        private void textBoxParentID_TextChanged(object sender, EventArgs e)
+        {
+			textBoxParentID.CharacterCasing = CharacterCasing.Upper;
+		}
+
+        private void textBoxChildID_TextChanged(object sender, EventArgs e)
+        {
+			textBoxChildID.CharacterCasing = CharacterCasing.Upper;
+		}
+
+        private void SRQidField_TextChanged_1(object sender, EventArgs e)
+		{
+			SRQidField.CharacterCasing = CharacterCasing.Upper;
+		}
     }
 }
